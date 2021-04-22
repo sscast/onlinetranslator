@@ -4,6 +4,7 @@ import 'package:pedantic/pedantic.dart';
 import 'package:translatetest/post.dart';
 import 'package:translatetest/util/show_exception_alert_dialog.dart';
 import 'package:translator/translator.dart';
+import 'package:translatetest/footer.dart';
 
 class TranslatePage extends StatefulWidget {
   const TranslatePage({Key key, this.post}) : super(key: key);
@@ -306,6 +307,7 @@ class _TranslatePageState extends State<TranslatePage> {
             },
           ),
         ),
+      Container(child: Footer()),
     ];
   }
 }
