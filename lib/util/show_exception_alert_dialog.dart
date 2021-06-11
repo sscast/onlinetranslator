@@ -4,9 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:translatetest/util/show_alert_dialog.dart';
 
 Future<void> showExceptionAlertDialog({
-  @required BuildContext context,
-  @required String title,
-  @required dynamic exception,
+  required BuildContext context,
+  required String title,
+  required dynamic exception,
 }) =>
     showAlertDialog(
       context: context,
@@ -15,7 +15,7 @@ Future<void> showExceptionAlertDialog({
       defaultActionText: 'OK',
     );
 
-String _message(dynamic exception) {
+String? _message(dynamic exception) {
   if (exception is FirebaseException) {
     return exception.message;
   }

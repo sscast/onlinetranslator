@@ -7,8 +7,8 @@ import 'package:translator/translator.dart';
 import 'package:translatetest/footer.dart';
 
 class TranslatePage extends StatefulWidget {
-  const TranslatePage({Key key, this.post}) : super(key: key);
-  final Post post;
+  const TranslatePage({Key? key, this.post}) : super(key: key);
+  final Post? post;
 
   @override
   _TranslatePageState createState() => _TranslatePageState();
@@ -17,16 +17,16 @@ class TranslatePage extends StatefulWidget {
 class _TranslatePageState extends State<TranslatePage> {
   final _formKey = GlobalKey<FormState>();
 
-  String _content;
-  String uid;
+  String? _content;
+  String? uid;
 
-  TextEditingController _controller;
-  TextEditingController _translateController;
+  TextEditingController? _controller;
+  TextEditingController? _translateController;
 
-  bool showTranslation;
-  bool isTranslated;
+  late bool showTranslation;
+  bool? isTranslated;
   final GoogleTranslator translator = GoogleTranslator();
-  String _translated;
+  String? _translated;
   Map<String, String> languagesList = {
     // "Cantonese": "zh-hk", //not surported by Google API
     "Original": "auto",
@@ -41,7 +41,7 @@ class _TranslatePageState extends State<TranslatePage> {
     'Russian': "ru",
   };
 
-  String _toLanguageCode;
+  String? _toLanguageCode;
   List<String> _dropdownMenuItems = [
     // "Cantonese",
     "Chinese (Simplified)",
@@ -54,7 +54,7 @@ class _TranslatePageState extends State<TranslatePage> {
     'Russian',
     "Spanish",
   ];
-  String _selectedLanguage;
+  String? _selectedLanguage;
   int selectedLanguageIndex = 0;
 
   @override
@@ -70,9 +70,8 @@ class _TranslatePageState extends State<TranslatePage> {
       } else {
         isTranslated = true;
       }
-      _selectedLanguage =
-          _dropdownMenuItems[selectedLanguageIndex] ?? "English";
-      _toLanguageCode = languagesList[_selectedLanguage] ?? 'en';
+      _selectedLanguage = _dropdownMenuItems[selectedLanguageIndex];
+      _toLanguageCode = languagesList[_selectedLanguage!] ?? 'en';
 
       showTranslation = false;
     }
@@ -86,14 +85,14 @@ class _TranslatePageState extends State<TranslatePage> {
   //   return result;
   // }
 
-  Future<void> _translate(String text, String code) async {
+  Future<void> _translate(String? text, String code) async {
     if (isTranslated == false)
       try {
         Translation translation =
-            await translator.translate(text, from: 'auto', to: code ?? 'en');
+            await translator.translate(text!, from: 'auto', to: code);
 
         setState(() {
-          _translated = translation?.text ?? "";
+          _translated = translation.text;
           isTranslated = true;
         });
 
@@ -209,7 +208,7 @@ class _TranslatePageState extends State<TranslatePage> {
         // onSaved: (value) => _content = value ?? _controller.text,
         onChanged: (value) {
           setState(() {
-            _content = value ?? _controller.text;
+            _content = value;
           });
         },
       ),
@@ -230,12 +229,12 @@ class _TranslatePageState extends State<TranslatePage> {
                     hintText: "Language",
                     fillColor: Colors.blue[200]),
                 value: _selectedLanguage ?? "English",
-                onChanged: (value) {
+                onChanged: (dynamic value) {
                   setState(() {
                     _selectedLanguage =
                         value ?? _dropdownMenuItems[selectedLanguageIndex];
                     _toLanguageCode =
-                        languagesList[_selectedLanguage] ?? "auto";
+                        languagesList[_selectedLanguage!] ?? "auto";
                     isTranslated = false;
                     // selectedLanguageIndex = _selectedLanguage.indexOf(value);
                   });
@@ -299,7 +298,7 @@ class _TranslatePageState extends State<TranslatePage> {
             showCursor: true,
             initialValue: _translated ?? "",
             onSaved: (value) =>
-                _translated = value ?? _translateController.text,
+                _translated = value ?? _translateController!.text,
             onChanged: (value) {
               setState(() {
                 _translated = value;

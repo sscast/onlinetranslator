@@ -4,17 +4,17 @@ import 'package:meta/meta.dart';
 
 @immutable
 class Post extends Equatable {
-  final String postId;
-  final String uid;
-  final String category;
-  final String location;
-  final String date;
-  final String title;
-  final String content;
-  final String translated;
+  final String? postId;
+  final String? uid;
+  final String? category;
+  final String? location;
+  final String? date;
+  final String? title;
+  final String? content;
+  final String? translated;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         postId,
         uid,
         category,
@@ -52,17 +52,14 @@ class Post extends Equatable {
   }
 
   factory Post.fromMap(Map<String, dynamic> data, String documentId) {
-    if (data == null) {
-      return null;
-    }
     final postId = data['postId'];
-    final String uid = data['uid'];
-    final String category = data['category'];
-    final String location = data['location'];
-    String date = data['date'];
-    String title = data['title'];
-    String content = data['content'];
-    String translated = data['translated'];
+    final String? uid = data['uid'];
+    final String? category = data['category'];
+    final String? location = data['location'];
+    String? date = data['date'];
+    String? title = data['title'];
+    String? content = data['content'];
+    String? translated = data['translated'];
 
     return Post(
       postId: postId,
