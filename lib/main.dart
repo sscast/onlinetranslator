@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:translatetest/post.dart';
 import 'package:translatetest/translate.dart';
+import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
 
 void main() {
-  runApp(MyApp());
+  configureApp();
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,8 +21,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Online Translator",
       theme: ThemeData(
-        primarySwatch: Colors.blue,
         fontFamily: 'Noto',
+        backgroundColor: Colors.blue,
       ),
       home: TranslatePage(
         post: post,

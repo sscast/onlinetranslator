@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:translatetest/post.dart';
+import 'package:translatetest/template.dart';
 import 'package:translatetest/util/show_exception_alert_dialog.dart';
 import 'package:translator/translator.dart';
-import 'package:translatetest/footer.dart';
 
-class TranslatePage extends StatefulWidget {
+class TranslatePage extends ConsumerStatefulWidget {
   const TranslatePage({Key? key, this.post}) : super(key: key);
   final Post? post;
 
@@ -14,7 +14,7 @@ class TranslatePage extends StatefulWidget {
   _TranslatePageState createState() => _TranslatePageState();
 }
 
-class _TranslatePageState extends State<TranslatePage> {
+class _TranslatePageState extends ConsumerState<TranslatePage> {
   final _formKey = GlobalKey<FormState>();
 
   String? _content;
@@ -108,40 +108,13 @@ class _TranslatePageState extends State<TranslatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          pinned: false,
-          snap: false,
-          floating: true,
-          backgroundColor: Colors.blue[900],
-          flexibleSpace: FlexibleSpaceBar(
-            centerTitle: true,
-            title: Text("Online Translator"),
-          ),
-        ),
-        SliverList(
-          delegate: SliverChildListDelegate([
-            Container(
-              alignment: Alignment.topCenter,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.white,
-                      Colors.blue,
-                    ],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    stops: [0.0, 0.5],
-                  ),
-                ),
-                child: _buildContents(),
-              ),
-            ),
-          ]),
-        ),
-      ],
+    return Template(
+      title: "Online Translator",
+      child: Column(
+        children: [
+          _buildContents(),
+        ],
+      ),
     );
   }
 
@@ -171,22 +144,6 @@ class _TranslatePageState extends State<TranslatePage> {
 
   List<Widget> _buildFormChildren() {
     return [
-      // TextFormField(
-      //   textAlign: TextAlign.start,
-      //   decoration: InputDecoration(
-      //     labelText: 'Title',
-      //     alignLabelWithHint: true,
-      //     border: OutlineInputBorder(
-      //       gapPadding: 2,
-      //       borderSide: BorderSide(
-      //         style: BorderStyle.none,
-      //       ),
-      //     ),
-      //   ),
-      //   keyboardAppearance: Brightness.light,
-      //   initialValue: _title,
-      //   validator: (value) => value.isNotEmpty ? null : 'Title can\'t be empty',
-      // ),
       TextFormField(
         textAlign: TextAlign.start,
         decoration: InputDecoration(
@@ -306,7 +263,6 @@ class _TranslatePageState extends State<TranslatePage> {
             },
           ),
         ),
-      Container(child: Footer()),
     ];
   }
 }
